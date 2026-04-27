@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlyMed Abroad – Your Dream. Our Guidance.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dim: #8B6914;
+    --black: #060608;
+    --black-2: #0E0E12;
+    --black-3: #16161C;
+    --white: #F8F4EC;
+    --text-muted: #A89878;
+    --gradient-gold: linear-gradient(135deg, #C9A84C 0%, #F0D080 50%, #C9A84C 100%);
+    --gradient-dark: linear-gradient(180deg, #060608 0%, #0E0E12 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5%;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+  }
+  .nav-logo span { -webkit-text-fill-color: var(--white); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-decoration: none;
+    letter-spacing: 0.5px; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  .nav-cta {
+    background: var(--gradient-gold); color: var(--black);
+    border: none; padding: 10px 22px; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.85rem;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid-lines {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content { position: relative; z-index: 1; max-width: 680px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3);
+    padding: 6px 16px; border-radius: 100px; margin-bottom: 28px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--gold);
+    animation: fadeInDown 0.8s ease both;
+  }
+  .hero-badge::before { content: '★'; font-size: 0.7rem; }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.1;
+    animation: fadeInUp 0.9s 0.1s ease both;
+  }
+  .hero-title .gold-text {
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    margin: 16px 0 10px;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--gold-light);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    animation: fadeInUp 0.9s 0.2s ease both;
+  }
+
+  .hero-desc {
+    color: var(--text-muted); font-size: 1rem; line-height: 1.7;
+    margin: 18px 0 36px;
+    animation: fadeInUp 0.9s 0.3s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeInUp 0.9s 0.4s ease both;
+  }
+
+  .btn-gold {
+    background: var(--gradient-gold); color: var(--black);
+    border: none; padding: 14px 32px; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s; text-decoration: none;
+    display: inline-block;
+  }
+  .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(201,168,76,0.4); }
+
+  .btn-outline {
+    background: transparent; color: var(--gold);
+    border: 1.5px solid var(--gold); padding: 14px 32px; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.95rem;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); transform: translateY(-3px); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 56px;
+    animation: fadeInUp 0.9s 0.5s ease both;
+  }
+  .stat-item { text-align: left; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900;
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { color: var(--text-muted); font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    z-index: 1;
+    animation: floatIn 1.2s 0.3s ease both;
+  }
+
+  .hero-globe {
+    width: clamp(280px, 35vw, 480px); height: clamp(280px, 35vw, 480px);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 35% 35%, rgba(201,168,76,0.15) 0%, transparent 60%);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: spin 30s linear infinite;
+  }
+
+  .hero-globe::before, .hero-globe::after {
+    content: ''; position: absolute; border-radius: 50%;
+  }
+  .hero-globe::before {
+    inset: 15%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .hero-globe::after {
+    inset: 30%;
+    border: 1px solid rgba(201,168,76,0.1);
+    background: rgba(201,168,76,0.03);
+  }
+
+  .globe-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; font-weight: 900;
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: counter-spin 30s linear infinite;
+    position: relative; z-index: 2; text-align: center;
+  }
+
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes counter-spin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+  /* ─── SECTIONS COMMON ─── */
+  section { padding: 90px 5%; position: relative; }
+  .section-tag {
+    display: inline-block;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; line-height: 1.15; margin-bottom: 18px;
+  }
+  .section-title .gold-text {
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.75; max-width: 640px; }
+
+  .gold-divider {
+    width: 60px; height: 2px;
+    background: var(--gradient-gold); margin: 20px 0;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--black-2); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    margin-top: 50px;
+  }
+
+  .about-pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-top: 32px;
+  }
+
+  .pillar-card {
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 8px; padding: 22px;
+    transition: all 0.3s;
+  }
+  .pillar-card:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-4px);
+  }
+  .pillar-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .pillar-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; color: var(--gold-light); }
+  .pillar-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+  .about-visual {
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .about-card-stack { position: relative; width: 340px; height: 380px; }
+
+  .a-card {
+    position: absolute;
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .a-card-1 { width: 280px; top: 0; left: 30px; transform: rotate(-4deg); }
+  .a-card-2 { width: 300px; top: 70px; left: 10px; transform: rotate(2deg); z-index: 2;
+    border-color: rgba(201,168,76,0.4); background: #12120e; }
+  .a-card-3 { width: 260px; top: 150px; left: 50px; transform: rotate(-1.5deg); z-index: 1; }
+
+  .a-card-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .a-card-value {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900;
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .a-card-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+  /* ─── BENEFITS ─── */
+  #benefits { background: var(--black); }
+
+  .benefits-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
+    margin-top: 50px;
+  }
+
+  .benefit-card {
+    background: linear-gradient(145deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px; padding: 32px 26px;
+    transition: all 0.35s; position: relative; overflow: hidden;
+  }
+  .benefit-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gradient-gold); opacity: 0; transition: opacity 0.3s;
+  }
+  .benefit-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.35); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+  .benefit-card:hover::before { opacity: 1; }
+
+  .benefit-icon {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 20px;
+  }
+  .benefit-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; color: var(--gold-light); }
+  .benefit-desc { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* ─── COMPARISON ─── */
+  #comparison {
+    background: var(--black-2);
+  }
+
+  .comparison-wrapper {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center;
+    margin-top: 50px;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .comp-side {
+    padding: 50px 40px; text-align: center;
+  }
+
+  .comp-india { background: var(--black-3); }
+  .comp-abroad {
+    background: linear-gradient(135deg, #1a1500, #0c0c00);
+    border-left: 1px solid rgba(201,168,76,0.3);
+  }
+
+  .comp-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 16px;
+  }
+  .comp-country {
+    font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .comp-india .comp-country { color: var(--white); }
+  .comp-abroad .comp-country {
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .comp-type { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+
+  .comp-price {
+    font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900;
+    line-height: 1.1; margin-bottom: 10px;
+  }
+  .comp-india .comp-price { color: #FF6B6B; }
+  .comp-abroad .comp-price {
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  .comp-note { font-size: 0.78rem; color: var(--text-muted); }
+
+  .comp-vs {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px;
+    background: var(--black);
+  }
+  .vs-badge {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--gradient-gold); color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem;
+    box-shadow: 0 0 30px rgba(201,168,76,0.3);
+  }
+  .comp-save-badge {
+    margin-top: 16px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 100px; padding: 6px 14px;
+    font-size: 0.72rem; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-align: center;
+  }
+
+  /* ─── COUNTRIES ─── */
+  #countries { background: var(--black); }
+
+  .countries-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+    margin-top: 50px;
+  }
+
+  .country-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.15);
+    background: var(--black-3);
+    transition: all 0.35s; cursor: pointer;
+    position: relative;
+  }
+  .country-card:hover { transform: translateY(-8px); border-color: rgba(201,168,76,0.5); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+
+  .country-img {
+    height: 150px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative; overflow: hidden;
+  }
+
+  .kaz { background: linear-gradient(135deg, #0c1a2e, #1a3a5c); }
+  .kyr { background: linear-gradient(135deg, #0c2e1a, #1a5c3a); }
+  .uzb { background: linear-gradient(135deg, #2e1a0c, #5c3a1a); }
+  .rus { background: linear-gradient(135deg, #2e0c0c, #5c1a1a); }
+  .geo { background: linear-gradient(135deg, #1a0c2e, #3a1a5c); }
+
+  .country-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5));
+  }
+
+  .country-info { padding: 20px; }
+  .country-name {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.15rem;
+    margin-bottom: 6px; color: var(--gold-light);
+  }
+  .country-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+  .country-badge {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(201,168,76,0.85); color: var(--black);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; z-index: 1;
+  }
+
+  /* ─── FEATURES ─── */
+  #features {
+    background: linear-gradient(180deg, var(--black-2) 0%, var(--black) 100%);
+  }
+
+  .features-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    margin-top: 50px;
+  }
+
+  .feature-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 28px;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 10px;
+    transition: all 0.3s;
+  }
+  .feature-item:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.25); }
+
+  .feature-icon-wrap {
+    flex-shrink: 0;
+    width: 52px; height: 52px; border-radius: 10px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  }
+
+  .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--gold-light); }
+  .feature-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--black-2); }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;
+    margin-top: 50px;
+  }
+
+  .testi-card {
+    background: var(--black-3);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px; padding: 30px;
+    transition: all 0.3s;
+  }
+  .testi-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
+
+  .testi-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 16px; }
+  .testi-quote { font-size: 0.95rem; color: #ccc; line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--gradient-gold);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; color: var(--black);
+  }
+  .testi-name { font-weight: 700; font-size: 0.9rem; color: var(--gold-light); }
+  .testi-location { font-size: 0.78rem; color: var(--text-muted); }
+
+  /* ─── FAQ ─── */
+  #faq { background: var(--black); }
+
+  .faq-list { margin-top: 50px; max-width: 800px; }
+
+  .faq-item {
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 8px; margin-bottom: 12px;
+    overflow: hidden; transition: border-color 0.3s;
+  }
+  .faq-item.open { border-color: rgba(201,168,76,0.4); }
+
+  .faq-question {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 26px; cursor: pointer;
+    font-weight: 600; font-size: 0.95rem;
+    color: var(--white); transition: color 0.3s;
+  }
+  .faq-question:hover { color: var(--gold-light); }
+  .faq-item.open .faq-question { color: var(--gold-light); }
+
+  .faq-arrow {
+    font-size: 1.2rem; color: var(--gold);
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding: 0 26px;
+    font-size: 0.88rem; color: var(--text-muted); line-height: 1.75;
+    background: rgba(201,168,76,0.03);
+  }
+  .faq-item.open .faq-answer {
+    max-height: 200px; padding: 16px 26px 22px;
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    background: linear-gradient(135deg, #0a0800 0%, #1a1200 50%, #0a0800 100%);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    text-align: center;
+  }
+
+  .cta-glow {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+
+  .cta-content { position: relative; z-index: 1; }
+
+  .cta-badge {
+    display: inline-block;
+    background: var(--gradient-gold); color: var(--black);
+    font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 100px; margin-bottom: 24px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); } 50% { box-shadow: 0 0 0 12px rgba(201,168,76,0); } }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .cta-desc { color: var(--text-muted); font-size: 1rem; margin-bottom: 36px; }
+
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--black-2); }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; align-items: start;
+  }
+
+  .contact-item {
+    display: flex; gap: 18px; align-items: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .contact-icon-wrap {
+    width: 50px; height: 50px; border-radius: 10px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+
+  .contact-label { font-size: 0.75rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .contact-value { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+  .contact-value a { color: var(--gold-light); text-decoration: none; }
+  .contact-value a:hover { text-decoration: underline; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px; padding: 14px 16px;
+    color: var(--white); font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--black-3); }
+  .form-group textarea { height: 110px; resize: vertical; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #030305; padding: 60px 5% 30px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 50px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900;
+    background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 14px;
+  }
+
+  .footer-tagline { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; margin-bottom: 24px; }
+
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 0.9rem; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .social-link:hover { background: rgba(201,168,76,0.2); transform: translateY(-3px); }
+
+  .footer-col h4 {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a { color: var(--text-muted); font-size: 0.85rem; text-decoration: none; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--gold-light); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.08); padding-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(-50%) scale(0.9); }
+    to { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 900px) {
+    .hero-visual { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .comparison-wrapper { grid-template-columns: 1fr; }
+    .comp-vs { padding: 16px; flex-direction: row; gap: 12px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 14px 4%; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 70px 4%; }
+    .about-pillars { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Fly</span>Med Abroad</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#countries">Countries</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Apply Now</button>
+  <div class="hamburger" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" style="display:none;position:fixed;top:64px;left:0;right:0;background:rgba(6,6,8,0.98);border-bottom:1px solid rgba(201,168,76,0.2);padding:24px 5%;z-index:99;">
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:18px;">
+    <li><a href="#about" style="color:var(--text-muted);text-decoration:none;font-size:1rem;" onclick="document.getElementById('mobileMenu').style.display='none'">About</a></li>
+    <li><a href="#benefits" style="color:var(--text-muted);text-decoration:none;font-size:1rem;" onclick="document.getElementById('mobileMenu').style.display='none'">Benefits</a></li>
+    <li><a href="#countries" style="color:var(--text-muted);text-decoration:none;font-size:1rem;" onclick="document.getElementById('mobileMenu').style.display='none'">Countries</a></li>
+    <li><a href="#faq" style="color:var(--text-muted);text-decoration:none;font-size:1rem;" onclick="document.getElementById('mobileMenu').style.display='none'">FAQ</a></li>
+    <li><a href="#contact" style="color:var(--text-muted);text-decoration:none;font-size:1rem;" onclick="document.getElementById('mobileMenu').style.display='none'">Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Admissions Open 2025–26</div>
+    <h1 class="hero-title">
+      MBBS Abroad –<br>
+      <span class="gold-text">A Smart Career</span><br>
+      Choice
+    </h1>
+    <p class="hero-sub">Your Dream. Our Guidance.</p>
+    <p class="hero-desc">
+      Join thousands of Indian students who chose FlyMed Abroad for a world-class medical education at government-recognized universities — safe, affordable, and fully supported.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">Apply Now</a>
+      <a href="tel:7727947502" class="btn-outline">Free Consultation</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">5000+</div>
+        <div class="stat-label">Students Placed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Visa Support</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-globe">
+      <div class="globe-text">✈</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag reveal">Who We Are</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title reveal">Guiding Students to <span class="gold-text">Global Medical Excellence</span></h2>
+      <div class="gold-divider reveal"></div>
+      <p class="section-desc reveal">FlyMed Abroad is India's trusted education consultancy helping aspiring doctors pursue MBBS from top government-recognized universities across the world. We provide end-to-end support — from university selection to visa processing — ensuring your journey abroad is smooth, safe, and successful.</p>
+      <div class="about-pillars">
+        <div class="pillar-card reveal reveal-delay-1">
+          <div class="pillar-icon">🛡️</div>
+          <div class="pillar-title">Trusted Guidance</div>
+          <div class="pillar-desc">Years of experience placing students in reputed medical programs worldwide.</div>
+        </div>
+        <div class="pillar-card reveal reveal-delay-2">
+          <div class="pillar-icon">🏛️</div>
+          <div class="pillar-title">Govt. Universities</div>
+          <div class="pillar-desc">Only NMC & WHO approved universities recognized by medical councils.</div>
+        </div>
+        <div class="pillar-card reveal reveal-delay-3">
+          <div class="pillar-icon">🎓</div>
+          <div class="pillar-title">Student Support</div>
+          <div class="pillar-desc">Dedicated support from admission all the way through graduation.</div>
+        </div>
+        <div class="pillar-card reveal reveal-delay-4">
+          <div class="pillar-icon">✈️</div>
+          <div class="pillar-title">Visa Assistance</div>
+          <div class="pillar-desc">100% guidance and support for hassle-free student visa processing.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-card-stack">
+        <div class="a-card a-card-1">
+          <div class="a-card-label">Students Guided</div>
+          <div class="a-card-value">5000+</div>
+          <div class="a-card-sub">Across 5 countries</div>
+        </div>
+        <div class="a-card a-card-2">
+          <div class="a-card-label">Total Package Cost</div>
+          <div class="a-card-value">₹30–40L</div>
+          <div class="a-card-sub">Including tuition + hostel</div>
+        </div>
+        <div class="a-card a-card-3">
+          <div class="a-card-label">Visa Success Rate</div>
+          <div class="a-card-value">100%</div>
+          <div class="a-card-sub">With complete assistance</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div style="text-align:center;">
+    <div class="section-tag reveal">Why Choose Us</div>
+    <h2 class="section-title reveal" style="text-align:center;">Everything You Need to <span class="gold-text">Succeed</span></h2>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card reveal reveal-delay-1">
+      <div class="benefit-icon">🏛️</div>
+      <div class="benefit-title">Government Recognized Universities</div>
+      <div class="benefit-desc">All universities are NMC & WHO approved, ensuring your degree is globally valid and recognized back in India.</div>
+    </div>
+    <div class="benefit-card reveal reveal-delay-2">
+      <div class="benefit-icon">💰</div>
+      <div class="benefit-title">Affordable Fees: ₹30–40 Lakhs</div>
+      <div class="benefit-desc">Complete MBBS package including tuition and hostel — a fraction of what private colleges charge in India.</div>
+    </div>
+    <div class="benefit-card reveal reveal-delay-3">
+      <div class="benefit-icon">🤝</div>
+      <div class="benefit-title">Complete Admission Support</div>
+      <div class="benefit-desc">From choosing the right university to completing enrollment, our team handles every step of the admission process.</div>
+    </div>
+    <div class="benefit-card reveal reveal-delay-4">
+      <div class="benefit-icon">🌐</div>
+      <div class="benefit-title">100% Visa Assistance</div>
+      <div class="benefit-desc">Our visa experts ensure your student visa is processed correctly and on time, with zero hassle.</div>
+    </div>
+    <div class="benefit-card reveal reveal-delay-1">
+      <div class="benefit-icon">📚</div>
+      <div class="benefit-title">English Medium Programs</div>
+      <div class="benefit-desc">All courses are taught in English, eliminating language barriers and making learning smooth and effective.</div>
+    </div>
+    <div class="benefit-card reveal reveal-delay-2">
+      <div class="benefit-icon">🛡️</div>
+      <div class="benefit-title">Safe & Secure Environment</div>
+      <div class="benefit-desc">Student-friendly countries with a proven track record of safety, quality campus life, and academic excellence.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison">
+  <div style="text-align:center;">
+    <div class="section-tag reveal">Cost Comparison</div>
+    <h2 class="section-title reveal" style="text-align:center;">Why Studying <span class="gold-text">Abroad Makes Sense</span></h2>
+    <p class="section-desc reveal" style="margin: 0 auto 10px; text-align:center;">The numbers speak for themselves. Get a world-class medical education at a fraction of the cost.</p>
+  </div>
+  <div class="comparison-wrapper reveal" style="margin-top:40px;">
+    <div class="comp-side comp-india">
+      <div class="comp-label">Private Medical College</div>
+      <div class="comp-country">India</div>
+      <div class="comp-type">Private MBBS Fees</div>
+      <div class="comp-price">₹60L – ₹1 Cr+</div>
+      <div class="comp-note">Tuition only · Hostel & other costs extra<br>Highly competitive · Limited seats</div>
+    </div>
+    <div class="comp-vs">
+      <div class="vs-badge">VS</div>
+      <div class="comp-save-badge">Save up to<br>₹60 Lakhs</div>
+    </div>
+    <div class="comp-side comp-abroad">
+      <div class="comp-label">Government University</div>
+      <div class="comp-country">Abroad</div>
+      <div class="comp-type">Total MBBS Fees</div>
+      <div class="comp-price">₹30–40 Lakhs</div>
+      <div class="comp-note">Including tuition + hostel<br>NMC & WHO approved · English medium</div>
+    </div>
+  </div>
+</section>
+
+<!-- COUNTRIES -->
+<section id="countries">
+  <div style="text-align:center;">
+    <div class="section-tag reveal">Destinations</div>
+    <h2 class="section-title reveal" style="text-align:center;">Top Countries for <span class="gold-text">MBBS Abroad</span></h2>
+  </div>
+  <div class="countries-grid">
+    <div class="country-card reveal reveal-delay-1">
+      <div class="country-badge">Popular</div>
+      <div class="country-img kaz">🇰🇿</div>
+      <div class="country-info">
+        <div class="country-name">Kazakhstan</div>
+        <div class="country-desc">Modern universities, vibrant student culture, and cost-effective education in Central Asia.</div>
+      </div>
+    </div>
+    <div class="country-card reveal reveal-delay-2">
+      <div class="country-img kyr">🇰🇬</div>
+      <div class="country-info">
+        <div class="country-name">Kyrgyzstan</div>
+        <div class="country-desc">Scenic landscapes, affordable living, and accredited medical programs attracting global students.</div>
+      </div>
+    </div>
+    <div class="country-card reveal reveal-delay-3">
+      <div class="country-badge">Top Pick</div>
+      <div class="country-img uzb">🇺🇿</div>
+      <div class="country-info">
+        <div class="country-name">Uzbekistan</div>
+        <div class="country-desc">Rich cultural heritage, budget-friendly costs, and quality medical education infrastructure.</div>
+      </div>
+    </div>
+    <div class="country-card reveal reveal-delay-4">
+      <div class="country-img rus">🇷🇺</div>
+      <div class="country-info">
+        <div class="country-name">Russia</div>
+        <div class="country-desc">Home to world-renowned medical universities with decades of history training global doctors.</div>
+      </div>
+    </div>
+    <div class="country-card reveal reveal-delay-1">
+      <div class="country-img geo">🇬🇪</div>
+      <div class="country-info">
+        <div class="country-name">Georgia</div>
+        <div class="country-desc">European standard education, English-medium programs, and a welcoming environment for Indian students.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div>
+    <div class="section-tag reveal">Our Promise</div>
+    <h2 class="section-title reveal">World-Class Education,<br><span class="gold-text">Global Recognition</span></h2>
+    <div class="gold-divider reveal"></div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-item reveal reveal-delay-1">
+      <div class="feature-icon-wrap">🏆</div>
+      <div>
+        <div class="feature-title">World Class Education</div>
+        <div class="feature-desc">Study at institutions offering advanced medical training, modern labs, and clinical exposure that prepares you for global practice.</div>
+      </div>
+    </div>
+    <div class="feature-item reveal reveal-delay-2">
+      <div class="feature-icon-wrap">🌍</div>
+      <div>
+        <div class="feature-title">Global Recognition</div>
+        <div class="feature-desc">Degrees recognized by NMC, WHO, and other international medical bodies — valid for practice in India and worldwide.</div>
+      </div>
+    </div>
+    <div class="feature-item reveal reveal-delay-3">
+      <div class="feature-icon-wrap">🔒</div>
+      <div>
+        <div class="feature-title">Safe & Secure Environment</div>
+        <div class="feature-desc">Carefully selected countries with student-friendly policies, active Indian communities, and secure campus environments.</div>
+      </div>
+    </div>
+    <div class="feature-item reveal reveal-delay-4">
+      <div class="feature-icon-wrap">📖</div>
+      <div>
+        <div class="feature-title">English Medium Programs</div>
+        <div class="feature-desc">All courses delivered in English. No language barrier. Focus purely on your studies and clinical training.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div style="text-align:center;">
+    <div class="section-tag reveal">Student Stories</div>
+    <h2 class="section-title reveal" style="text-align:center;">Trusted by <span class="gold-text">Thousands of Families</span></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"FlyMed Abroad made my dream of becoming a doctor a reality. The team guided me through every step — from choosing Kazakhstan to getting my visa sorted in no time."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">P</div>
+        <div>
+          <div class="testi-name">Priya Sharma</div>
+          <div class="testi-location">MBBS Student · Kazakhstan · Delhi, India</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"Compared to the 80 lakhs I would have spent in India, studying in Kyrgyzstan through FlyMed saved my family a fortune. The support has been outstanding throughout."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <div class="testi-name">Rahul Verma</div>
+          <div class="testi-location">MBBS Student · Kyrgyzstan · Lucknow, India</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal reveal-delay-3">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"As a parent I was worried, but FlyMed Abroad's transparency and constant communication gave us complete peace of mind. My daughter is thriving in Georgia."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Anjali's Father</div>
+          <div class="testi-location">Parent · Georgia · Jaipur, India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div>
+    <div class="section-tag reveal">FAQ</div>
+    <h2 class="section-title reveal">Frequently Asked <span class="gold-text">Questions</span></h2>
+    <div class="gold-divider reveal"></div>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-question">Is MBBS from abroad valid in India? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">Yes. MBBS degrees from NMC and WHO approved universities are valid in India. After completing your degree, you simply need to clear the FMGE (Foreign Medical Graduate Examination) to practice medicine in India.</div>
+    </div>
+    <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+      <div class="faq-question">What is the total cost of MBBS abroad? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">The total cost including tuition fees, hostel, and other expenses ranges from ₹30 to ₹40 Lakhs for the full MBBS program. This is significantly lower than private MBBS colleges in India which can cost ₹60 Lakhs to ₹1 Crore or more.</div>
+    </div>
+    <div class="faq-item reveal reveal-delay-2" onclick="toggleFaq(this)">
+      <div class="faq-question">What is the eligibility to apply for MBBS abroad? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">You need to have completed 10+2 with Physics, Chemistry, and Biology with at least 50% marks. You also need a valid NEET score. Our counselors will assess your profile and recommend the best university for your eligibility.</div>
+    </div>
+    <div class="faq-item reveal reveal-delay-3" onclick="toggleFaq(this)">
+      <div class="faq-question">Is it safe to study abroad? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">Absolutely. The countries we work with — Kazakhstan, Kyrgyzstan, Uzbekistan, Russia, and Georgia — all have established Indian student communities, active Indian embassies, and student-friendly environments. FlyMed Abroad also provides pre-departure briefings and on-ground support.</div>
+    </div>
+    <div class="faq-item reveal reveal-delay-4" onclick="toggleFaq(this)">
+      <div class="faq-question">How does FlyMed Abroad help with visa processing? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">We provide 100% visa assistance. Our team prepares all documentation, guides you through the application process, liaises with embassies, and ensures your student visa is obtained smoothly and on time before your course begins.</div>
+    </div>
+    <div class="faq-item reveal" onclick="toggleFaq(this)">
+      <div class="faq-question">Are the courses taught in English? <span class="faq-arrow">+</span></div>
+      <div class="faq-answer">Yes. All medical programs at our partner universities are offered in English medium, so you can focus entirely on your studies without any language barrier. Some universities offer optional local language classes to help with daily life.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <div class="cta-badge reveal">Admissions Open 2025–26</div>
+    <h2 class="cta-title reveal">Take the First Step Towards<br><span class="gold-text">Your Dream Career</span></h2>
+    <p class="cta-desc reveal">Seats fill fast. Apply today and let FlyMed Abroad turn your medical dream into reality.</p>
+    <div class="cta-btns reveal">
+      <a href="#contact" class="btn-gold">Apply Now</a>
+      <a href="tel:7727947502" class="btn-outline">📞 Call Us Today</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag reveal">Get In Touch</div>
+  <h2 class="section-title reveal">Start Your <span class="gold-text">MBBS Journey Today</span></h2>
+  <div class="gold-divider reveal"></div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-item reveal">
+        <div class="contact-icon-wrap">📞</div>
+        <div>
+          <div class="contact-label">Call Us</div>
+          <div class="contact-value">
+            <a href="tel:7727947502">+91 77279 47502</a><br>
+            <a href="tel:7903321060">+91 79033 21060</a><br>
+            <a href="tel:7070946316">+91 70709 46316</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-1">
+        <div class="contact-icon-wrap">✉️</div>
+        <div>
+          <div class="contact-label">Email Us</div>
+          <div class="contact-value"><a href="mailto:flymededucation@gmail.com">flymededucation@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-2">
+        <div class="contact-icon-wrap">🕐</div>
+        <div>
+          <div class="contact-label">Working Hours</div>
+          <div class="contact-value">Mon – Sat: 9:00 AM – 7:00 PM</div>
+        </div>
+      </div>
+      <div class="contact-item reveal reveal-delay-3">
+        <div class="contact-icon-wrap">🎓</div>
+        <div>
+          <div class="contact-label">Free Consultation</div>
+          <div class="contact-value">Book a free 30-min session with our expert counselors</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="contact-form">
+        <div class="form-group">
+          <input type="text" placeholder="Your Full Name">
+        </div>
+        <div class="form-group">
+          <input type="tel" placeholder="Phone Number">
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+          <select>
+            <option value="" disabled selected>Preferred Country</option>
+            <option>Kazakhstan</option>
+            <option>Kyrgyzstan</option>
+            <option>Uzbekistan</option>
+            <option>Russia</option>
+            <option>Georgia</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Your message or questions..."></textarea>
+        </div>
+        <button class="btn-gold" style="width:100%;border:none;" onclick="handleSubmit(this)">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">FlyMed Abroad</div>
+      <p class="footer-tagline">Your Dream. Our Guidance. India's trusted MBBS abroad consultancy helping students achieve their medical career goals at world-class universities.</p>
+      <div class="social-links">
+        <a href="#" class="social-link" title="Facebook">f</a>
+        <a href="#" class="social-link" title="Instagram">📷</a>
+        <a href="#" class="social-link" title="YouTube">▶</a>
+        <a href="#" class="social-link" title="WhatsApp">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#benefits">Why Us</a></li>
+        <li><a href="#comparison">Fee Comparison</a></li>
+        <li><a href="#countries">Countries</a></li>
+        <li><a href="#faq">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Countries</h4>
+      <ul class="footer-links">
+        <li><a href="#countries">Kazakhstan</a></li>
+        <li><a href="#countries">Kyrgyzstan</a></li>
+        <li><a href="#countries">Uzbekistan</a></li>
+        <li><a href="#countries">Russia</a></li>
+        <li><a href="#countries">Georgia</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="tel:7727947502">+91 77279 47502</a></li>
+        <li><a href="tel:7903321060">+91 79033 21060</a></li>
+        <li><a href="tel:7070946316">+91 70709 46316</a></li>
+        <li><a href="mailto:flymededucation@gmail.com">flymededucation@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 FlyMed Abroad. All rights reserved. | Your Dream. Our Guidance.</div>
+    <div class="footer-copy">MBBS Abroad | Safe | Secure | Success</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // FAQ toggle
+  function toggleFaq(item) {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Mobile menu
+  function toggleMenu(btn) {
+    const menu = document.getElementById('mobileMenu');
+    menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Form submit
+  function handleSubmit(btn) {
+    btn.textContent = '✓ Message Sent!';
+    btn.style.background = 'linear-gradient(135deg, #2d6a2d, #4caf50)';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+    }, 3000);
+  }
+
+  // Nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold-light)' : '';
+    });
+  });
+</script>
+</body>
+</html>
